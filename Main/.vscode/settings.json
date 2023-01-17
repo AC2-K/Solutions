@@ -20,7 +20,8 @@
         "stack": "cpp",
         "type_traits": "cpp",
         "xhash": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "numeric": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

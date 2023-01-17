@@ -1,10 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
-//cout << fixed << setprecision(10);
 #define rep(i, N)  for(int i=0;i<(N);i++)
 #define all(x) (x).begin(),(x).end()
 #define popcount(x) __builtin_popcount(x)
 using ll = long long;
+//using i128=__int128_t;
 using ld = long double;
 using graph = vector<vector<int>>;
 using P = pair<int, int>;
@@ -18,22 +18,15 @@ const int dx[4] = { 1,0,-1,0 };
 const int dy[4] = { 0,1,0,-1 };
 template<class T>void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>void chmin(T&x,T y){if(x>y)x=y;}
-
 int main() {
-    ll n;
-    cin>>n;
-    set<ll> diviser;
-    for(ll p=1;p*p<=n;p++){
-        if(n%p!=0)continue;
-        diviser.insert(p);
-        diviser.insert(n/p);
+    const ll OVER_FROW=1000000000000000000;
+    ll a,b;
+    cin>>a>>b;
+    ll g=gcd(a,b);
+    //lcm=a/g*b
+    if(b/g>OVER_FROW/a){
+        cout<<"Large"<<endl;
+    }else{
+        cout<<a/g*b<<endl;
     }
-    ll sum=0;
-    for(auto el:diviser){
-        sum+=el;
-    }
-    sum-=n;
-    if(n==sum)cout<<"Perfect"<<endl;
-    else if(sum<n)cout<<"Deficient"<<endl;
-    else cout<<"Abundant"<<endl;
 }
