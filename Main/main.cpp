@@ -19,14 +19,5 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
-    const ll OVER_FROW=1000000000000000000;
-    ll a,b;
-    cin>>a>>b;
-    ll g=gcd(a,b);
-    //lcm=a/g*b
-    if(b/g>OVER_FROW/a){
-        cout<<"Large"<<endl;
-    }else{
-        cout<<a/g*b<<endl;
-    }
+    
 }

@@ -2,34 +2,14 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: cl.exe アクティブなファイルのビルド",
-            "command": "cl.exe",
-            "args": [
-                "/Zi",
-                "/EHsc",
-                "/nologo",
-                "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "${file}"
-            ],
-            "options": {
-                "cwd": "${fileDirname}"
-            },
-            "problemMatcher": [
-                "$msCompile"
-            ],
-            "group": "build",
-            "detail": "デバッガーによって生成されたタスク。"
-        },
-        {
-            "type": "cppbuild",
-            "label": "C/C++: cpp.exe アクティブなファイルのビルド",
-            "command": "C:\\MinGW\\bin\\cpp.exe",
+            "label": "C/C++: g++ アクティブなファイルのビルド",
+            "command": "/usr/bin/g++",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"
