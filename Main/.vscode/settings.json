@@ -1,0 +1,26 @@
+{
+    "files.associations": {
+        "utility": "cpp",
+        "queue": "cpp",
+        "vector": "cpp",
+        "compare": "cpp",
+        "cmath": "cpp",
+        "iostream": "cpp",
+        "xutility": "cpp",
+        "ios": "cpp",
+        "tuple": "cpp",
+        "xstring": "cpp",
+        "ostream": "cpp",
+        "bitset": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "initializer_list": "cpp",
+        "list": "cpp",
+        "random": "cpp",
+        "stack": "cpp",
+        "type_traits": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
