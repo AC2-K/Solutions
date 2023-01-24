@@ -9,6 +9,8 @@
         "unordered_set": "cpp",
         "vector": "cpp",
         "optional": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "iosfwd": "cpp",
+        "iostream": "cpp"
     }
 }
