@@ -19,32 +19,26 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
-    const int H_MAX=1e3;
-    const int W_MAX=1e3;
-    vector<vector<int>> sums(H_MAX+1,vector<int>(W_MAX+1));
-
-    int n;
-    cin>>n;
-    rep(i,n){
-        int lx,ly,rx,ry;
-        cin>>lx>>ly>>rx>>ry;
-        sums[lx][ly]++;
-        sums[lx][ry]--;
-        sums[rx][ly]--;
-        sums[rx][ry]++;
-    }
-    for(int i=0;i<=H_MAX;i++)for(int j=1;j<=W_MAX;j++){
-        sums[i][j]+=sums[i][j-1];
-    }
-    for(int j=0;j<=W_MAX;j++)for(int i=1;i<=H_MAX;i++){
-        sums[i][j]+=sums[i-1][j];
-    }
-    map<int,int> cnt;
-    rep(i,H_MAX+1)rep(j,W_MAX+1){
-        cnt[sums[i][j]]++;
+    int n,k;
+    cin>>n>>k;
+    vector<int> a(n);
+    for(auto&aa:a){
+        cin>>aa;
     }
 
-    for(int k=1;k<=n;k++){
-        cout<<cnt[k]<<'\n';
+    int l=0,r=0;
+    int sz=0;
+    unordered_map<int,int> mp;
+    int ans=0;
+
+    for(int i=0,j=0;j<n;j++){
+        mp[a[j]]++;
+        for(;i<=j&&mp.size()>k;i++){
+            mp[a[i]]--;
+            if(mp[a[i]]==0)mp.erase(a[i]);
+        }
+
+        if(mp.size()<=k)chmax(ans,j-i+1);
     }
+    cout<<ans<<'\n';
 }
