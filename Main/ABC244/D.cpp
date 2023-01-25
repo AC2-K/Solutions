@@ -1,7 +1,4 @@
-
 #include<bits/stdc++.h>
-#include<atcoder/all>
-using namespace atcoder;
 using namespace std;
 #define rep(i, N)  for(int i=0;i<(N);i++)
 #define all(x) (x).begin(),(x).end()
@@ -19,26 +16,22 @@ const ll MOD = 1e9 + 7;
 const ll MOD2 = 998244353;
 const int dx[4] = { 1,0,-1,0 };
 const int dy[4] = { 0,1,0,-1 };
-template<class T>inline void chmax(T&x,T y){if(x<y)x=y;}
-template<class T>inline void chmin(T&x,T y){if(x>y)x=y;}
+template<class T>void chmax(T&x,T y){if(x<y)x=y;}
+template<class T>void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
-    int n,m;
-    cin>>n>>m;
-    scc_graph g(n);
-    rep(i,m){
-        int a,b;
-        cin>>a>>b;
-        a--;
-        b--;
-        g.add_edge(a,b);
-    }
+    vector<char> s(3),t(3);
+    rep(i,3)cin>>s[i];
+    rep(i,3)cin>>t[i];
 
-    auto res=g.scc();
-    ll ans=0;
-    for(auto&v:res){
-        int sz=v.size();
+    rep(i,3)rep(j,3){
+        if(i==j)continue;
+        swap(s[i],s[j]);
 
-        ans+=1ll*sz*(sz-1)/2;
+        if(s==t){
+            cout<<"No\n";
+            return 0;
+        }
+        swap(s[i],s[j]);
     }
-    cout<<ans<<endl;
+    cout<<"Yes\n";
 }

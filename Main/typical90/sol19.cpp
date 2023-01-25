@@ -19,5 +19,24 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
-    
+    int n;
+    cin>>n;
+    vector<int> a(2*n);
+    for(auto&aa:a)cin>>aa;
+    vector<vector<ll>> dp(2*n+1,vector<ll>(2*n+1,infl));    //dp[l][r]:=[l,r]を取り除くために必要なコスト
+    auto rec=[&](auto f,int l,int r)-> ll {
+        if(dp[l][r]<infl)return dp[l][r];
+        if(l>r)return 0;
+
+        ll res=infl;
+        chmin(res,f(f,l+1,r-1)+abs(a[l]-a[r]));
+        for(int i=l+1;i+1<r;i+=2){
+            ll cost=f(f,l,i)+f(f,i+1,r);
+            chmin(res,cost);
+        }
+
+        return dp[l][r]=res;
+    };
+
+    cout<<rec(rec,0,2*n-1)<<'\n';
 }
