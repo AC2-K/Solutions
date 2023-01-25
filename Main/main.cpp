@@ -19,5 +19,5 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
-    
+    //
 }
