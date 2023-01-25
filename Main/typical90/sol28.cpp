@@ -19,13 +19,5 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
-    ll K;
-    cin>>K;
-    ll ans=0;
-    for(ll a=1;a*a*a<=K;a++){
-        for(ll b=a;a*b*b<=K;b++){
-            if(K%(a*b)==0)ans++;
-        }
-    }
-    cout<<ans<<'\n';
+    
 }
