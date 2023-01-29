@@ -3,12 +3,15 @@ using namespace std;
 //cout << fixed << setprecision(10);
 #define rep(i, N)  for(int i=0;i<(N);i++)
 #define all(x) (x).begin(),(x).end()
+#define popcount(x) __builtin_popcount(x)
 using ll = long long;
 using ld = long double;
-using Graph = vector<vector<int>>;
+using graph = vector<vector<int>>;
 using P = pair<int, int>;
-const int INF = 1e9;
-const ll INFL = 1e18;
+const int inf = 1e9;
+const ll infl = 1e18;
+const ld eps = 1e-6;
+const long double pi = acos(-1);
 const ll MOD = 1e9 + 7;
 const ll MOD2 = 998244353;
 const int dx[4] = { 1,0,-1,0 };
@@ -16,79 +19,82 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>void chmin(T&x,T y){if(x>y)x=y;}
 
-class DSU
-{
+
+template <class X>
+class SegmentTree {
+    using fx = function<X(X, X)>;
+    int n;
+    fx op;
+    const X ex;
+    vector<X> dat;
+public:
+    SegmentTree(int n_, fx fx_, X ex_) : n(), op(fx_), ex(ex_), dat(n_ * 4, ex_) {
+        int x = 1;
+        while (n_ > x) {
+            x *= 2;
+        }
+        n = x;
+    }
+    void set(int pos, X val) { 
+        dat[pos + n - 1] = val;
+    }
+    void build() {
+        for (int k = n - 2; k >= 0; k--){
+            dat[k] = op(dat[2 * k + 1], dat[2 * k + 2]);
+        }
+    }
+
+    void update(int pos, X val) {
+        pos += n - 1;
+        dat[pos] = val;
+        while (pos > 0) {
+            pos = (pos - 1) / 2;
+            dat[pos] = op(dat[pos * 2 + 1], dat[pos * 2 + 2]);
+        }
+    }
+    void add(int pos,X val){
+        update(pos,get(pos)+val);
+    }
+    X query(int a, int b) { 
+        if(a==0&&b==n)return dat[0];
+        return query(a, b, 0, 0, n); 
+    }
+
 private:
-    vector<int> par, rank, siz,Max;
-    int N;
+    X query(int a, int b, int id, int l, int r) {
+        if (r <= a || b <= l) {
+            return ex;
+        }
+        else if (a <= l && r <= b) {
+            return dat[id];
+        }
+        else {
+            X vl = query(a, b, id * 2 + 1, l, (l + r) / 2);
+            X vr = query(a, b, id * 2 + 2, (l + r) / 2, r);
+            return op(vl, vr);
+        }
+    }
 
 public:
-    DSU(int n,vector<int> a) : par(n, -1), rank(n, 0), siz(n, 1), N(n),Max(n,0){
-        rep(i,n){
-            Max[i]=a[i];
-        }
-    }
-
-    int root(int x)
-    {
-        if (par[x] == -1)
-            return x;
-        else
-            return par[x] = root(par[x]);
-    }
-
-    bool same(int x, int y)
-    {
-        return root(x) == root(y);
-    }
-
-    bool merge(int x, int y)
-    {
-        int rx = root(x), ry = root(y);
-        if (rx == ry)
-            return false;
-
-        if (rank[rx] < rank[ry])
-            swap(rx, ry);
-        par[ry] = rx; 
-        
-        siz[rx] += siz[ry];
-        Max[rx]=max(Max[rx],Max[ry]);
-        return true;
-    }
-
-    int size(int x)
-    {
-        return siz[root(x)];
-    }
-    int groupMax(int y){
-        return Max[y];
-    }
-    int connect()
-    {
-        int cnt = 0;
-        for (int i = 0; i < N; i++)
-            if (root(i) == i)
-                cnt++;
-        return cnt;
-    }
+    X get(int pos){return dat[pos+n-1];}
 };
 int main() {
-    int N,M;
-    cin>>N>>M;
-    vector<int> A(N),V(N);
-    rep(i,N){
-        cin>>A[i]>>V[i];
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n,m;
+    cin>>n>>m;
+    vector<int> a(n);
+    vector<ll> v(n);
+    rep(i,n){
+        cin>>a[i]>>v[i];
     }
-    DSU dsu(N,V);
-    rep(i,N-1){
-        if(A[i]==A[i+1])dsu.merge(i,i+1);
+
+    SegmentTree<ll> dp(m+1,[](ll e1,ll e2){return max(e1,e2);},-infl);
+    dp.update(0,0);
+    rep(i,n){
+        auto mn=max(dp.query(0,a[i]),dp.query(a[i]+1,m+2));
+        auto pre=dp.get(a[i]);
+        if(pre<mn+v[i])dp.update(a[i],mn+v[i]);
     }
-    ll ans=0;
-    rep(x,N){
-        if(dsu.root(x)==x){
-            ans+=dsu.groupMax(x);
-        }
-    }
-    cout<<ans<<endl;
+    cout<<dp.query(0,m+2)<<endl;
 }
