@@ -18,32 +18,32 @@ const int dx[4] = { 1,0,-1,0 };
 const int dy[4] = { 0,1,0,-1 };
 template<class T>inline void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>inline void chmin(T&x,T y){if(x>y)x=y;}
-
-#pragma GCC target("avx2")
-#pragma GCC optimize("O3")
-#pragma GCC optimize("unroll-loops")
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    string x;
-    int n;
-    cin>>x>>n;
-    constexpr int alphabet_num='z'-'a'+1;
-    vector<int> idx(alphabet_num);
-    rep(i,x.size()){
-        idx[x[i]-'a']=i;
+    int n,k;
+    cin>>n>>k;
+    vector<int> a(n);
+    for(auto&aa:a){
+        cin>>aa;
     }
-    vector<string> s(n);
-    for(auto&ss:s){
-        cin>>ss;
+
+    vector<vector<int>> splitted(k);
+    rep(i,n){
+        splitted[i%k].push_back(a[i]);
     }
-    sort(all(s),[&](string s1,string s2){
-        rep(i,min(s1.size(),s2.size())){
-            if(s1[i]!=s2[i])return idx[s1[i]-'a']<idx[s2[i]-'a'];
+    for(auto&vec:splitted){
+        sort(all(vec));
+    }
+    rep(i,n){
+        a[i]=splitted[i%k][i/k];
+        //cout<<a[i]<<' ';
+    }
+    //cout<<'\n';
+    rep(i,n-1){
+        if(a[i]>a[i+1]){
+            cout<<"No\n";
+            return 0;
         }
-        return s1.size()<s2.size();
-    });
-    for(auto&ss:s){
-        cout<<ss<<'\n';
     }
+    cout<<"Yes\n";
+    return 0;
 }
