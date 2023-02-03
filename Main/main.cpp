@@ -19,5 +19,21 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>inline void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>inline void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
-    temp;
+    int n,k;
+    cin>>n>>k;
+    vector<double> e(n);
+    rep(i,n){
+        int p;
+        cin>>p;
+        e[i]=(p+1)/2.;
+    }
+    vector<double> sum(n+1);
+    rep(i,n)sum[i+1]=sum[i]+e[i];
+    double ans=0;
+    for(int r=k;r<=n;r++){
+        int l=r-k;
+        chmax(ans,sum[r]-sum[l]);
+    }
+    cout<<fixed<<setprecision(12);
+    cout<<ans<<endl;
 }
