@@ -19,41 +19,41 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>inline void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>inline void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
-    int n,m;
-    cin>>n>>m;
-    vector<int> s(n),t(m);
-    for(auto&ss:s){
-        char c;
-        cin>>c;
-        if(c=='J')ss=0;
-        else if(c=='O')ss=1;
-        else ss=2;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int n,k;
+    cin>>n>>k;
+    vector<ll> a(n);
+    for(auto&aa:a){
+        cin>>aa;
     }
-
-    for(auto&ss:t){
-        char c;
-        cin>>c;
-        if(c=='J')ss=0;
-        else if(c=='O')ss=1;
-        else ss=2;
-    }
-
-    int dp[2010][2010][3];
-    dp[0][0][0]=true,dp[0][0][1]=true,dp[0][0][2]=true;
-    rep(i,n+1)rep(j,m+1)rep(k,3){
-        if(!dp[i][j][k])continue;
-        if(i<n&&s[i]!=k){
-            dp[i+1][j][s[i]]=true;
+    vector<vector<ll>> dp(n,vector<ll>(n,-infl));
+    ll res=0;
+    rep(i,n)rep(j,i){
+        if(j>0){
+            dp[i][j] = dp[i][j-1];
         }
-        if(j<n&&t[i]!=k){
-            dp[i][j+1][t[i]]=true;
+        dp[i][j] = max(dp[i][j],a[i]+a[j]);
+        if(0<=i-k&&j>0){
+            dp[i][j] = max(dp[i][j],dp[j][min(j-1,i-k)]+a[i]);
+        }
+        chmax(res,dp[i][j]);
+    }
+    cout<<res<<'\n';
+    /*
+   ll res = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            if (j > 0) {
+                dp[i][j] = dp[i][j - 1];
+            }
+            dp[i][j] = max(dp[i][j], a[i] + a[j]);
+            if (0 <= i - k && j > 0) {
+                dp[i][j] = max(dp[i][j], dp[j][min(j - 1, i - k)] + a[i]);
+            }
+            res = max(res, dp[i][j]);
         }
     }
-    int ans=0;
-    rep(i,n+1)rep(j,m+1)rep(k,3){
-        if(dp[i][j][k]){
-            chmax(ans,i+j);
-        }
-    }
-    cout<<ans<<endl;
+    cout << res << endl;
+    */
 }
