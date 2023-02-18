@@ -1,5 +1,0 @@
-alias abc$name="mkdir abc$name"
-alias arc$name="mkdir arc$name"
-alias agc$name="mkdir agc$name"
-alias com$filename="g++ $filename -std=c++17 -I /home/ykota0619/MainSpace/Main/Main/ac-library"
-alias out="./a.out"
