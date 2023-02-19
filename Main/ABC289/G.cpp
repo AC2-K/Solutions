@@ -85,21 +85,20 @@ public:
     }
 };
 int main() {
-    ConvexHullTrick<ll> cht;
-    int n;
-    double c;
-    cin>>n>>c;
-    vector<ll> h(n);
-    for(auto&hh:h){
-        cin>>hh;
+    ConvexHullTrick<ll,true> cht;
+    int n,m;
+    cin>>n>>m;
+    vector<ll> b(n);
+    for(auto&bb:b){
+        cin>>bb;
     }
-    vector<ll> dp(n);
-    dp[0]=0;
-    cht.add(-2*h[0],c+h[0]*h[0]+dp[0]);
-
-    for(int i=1;i<n;i++){
-        dp[i]=cht(h[i])+h[i]*h[i];
-        cht.add(-2*h[i],c+h[i]*h[i]+dp[i]);
+    sort(all(b),greater<>());
+    for(int i=1;i<=n;i++){
+        cht.add(i,i*b[i-1]);
     }
-    cout<<dp[n-1]<<'\n';
+    rep(i,m){
+        int c;
+        cin>>c;
+        cout<<cht(c)<<'\n';
+    }
 }
