@@ -21,32 +21,37 @@ template<class T>inline void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
     int n;
     cin>>n;
-    vector<int> c(n);
-    for(auto&cc:c){
-        cin>>cc;
-    }
-
-    vector<P> rle;
-    rep(i,n){
-        if(rle.empty()){
-            rle.emplace_back(c[i],1);
-            continue;
+    vector<string> ans;
+    rep(msk,1<<n){
+        string s;
+        rep(i,n){
+            if((msk>>i)&1){
+                s+=')';
+            }else{
+                s+='(';
+            }
         }
 
-        if(rle.back().first==c[i]){
-            rle.back().second++;
-        }else{
-            const auto&[ci,l]=rle.back();
-            rle.back();
-
-            rle.emplace_back(c[i],l+1);
+        stack<char> st;
+        bool is_ok=true;
+        rep(i,n){
+            if(s[i]=='('){
+                st.emplace('(');
+            }else{
+                if(st.empty()){
+                    is_ok=false;
+                }
+                else{
+                    st.pop();
+                }
+            }
+        }
+        if(is_ok&&st.empty()){
+            ans.emplace_back(s);
         }
     }
-    int ans=0;
-    for(auto&[ci,p]:rle){
-        if(ci==0){
-            ans+=p;
-        }
+    sort(all(ans));
+    for(const auto&s:ans){
+        cout<<s<<'\n';
     }
-    cout<<ans<<'\n';
 }

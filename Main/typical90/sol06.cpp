@@ -19,4 +19,29 @@ const int dy[4] = { 0,1,0,-1 };
 template<class T>inline void chmax(T&x,T y){if(x<y)x=y;}
 template<class T>inline void chmin(T&x,T y){if(x>y)x=y;}
 int main() {
+    int n,k;
+    string s;
+    cin>>n>>k>>s;
+
+    vector<vector<int>> c_pos('z'-'a'+1);
+    rep(i,n){
+        c_pos[s[i]-'a'].emplace_back(i);
+    }
+    int cur=-1;
+    while(k){
+        rep(c,'z'-'a'+1){
+            auto it=upper_bound(all(c_pos[c]),cur);
+            if(it==c_pos[c].end()){
+                continue;
+            }
+
+            if(n-(*it)>=k){
+                cout<<(char)('a'+c);
+                cur=*it;
+                k--;
+                break;
+            }
+        }
+    }
+    cout<<'\n';
 }
